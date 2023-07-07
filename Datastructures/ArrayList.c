@@ -1,18 +1,18 @@
-#include "List.h"
+#include "Lists.h"
 #include <string.h>
 #include <stdlib.h>
 
 
-List create_list(){
+ArrayList create_array_list(){
     void * array = calloc(32, sizeof(void*));
-    List list;
+    ArrayList list;
     list.size = 0;
     list.max_size = 32;
     list.list = array;
     return list;
 }
 
-int check_full(List* list){
+int check_array_list_full(ArrayList* list){
     for(int i = 0; i < list->max_size; i++){
         int element = *(int *)(list->list + i*sizeof(void *));
         if(element == 0){
@@ -33,8 +33,8 @@ int check_full(List* list){
     return 1;
 }
 
-void add_to_list(List* list,void* element_to_be_added){
-    check_full(list);
+void add_to_array_list(ArrayList* list, void* element_to_be_added){
+    check_array_list_full(list);
     int i = 0;
     for(i;i < list->max_size; i++){
         int element = *(int *)(list->list + i*sizeof(void *));
@@ -46,18 +46,18 @@ void add_to_list(List* list,void* element_to_be_added){
     list->size++;
 }
 
-void remove_from_list(List* list,int index){
+void remove_from_array_list(ArrayList* list, int index){
     for(int i = index; i < list->size-1; i++){
         memmove(list->list + i*sizeof(void *), list->list + (i+1)*sizeof(void *), sizeof(void *));
     }
     list->size--;
 }
 
-void * get_from_list(List* list, int index){
+void * get_from_array_list(ArrayList* list, int index){
     return list->list + index*sizeof(void *);
 }
 
-void clear_list(List *list){
+void clear_array_list(ArrayList *list){
     for(int i = 0; i < list->size; i++){
         memset(list->list + i*sizeof(void *), 0, sizeof(void *));
     }
